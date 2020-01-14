@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.orange.microservices.user_service.domain.User;
 import com.orange.microservices.user_service.repository.UserRepository;
+import com.orange.microservices.user_service.service.UserService;
 
 /**
  * @author steph
@@ -31,6 +32,8 @@ import com.orange.microservices.user_service.repository.UserRepository;
 public class UserController {
 	@Autowired
 	private UserRepository userRepo;
+	@Autowired
+	private UserService userService;
 	
 	private Logger logger = LoggerFactory.getLogger(UserController.class);
 	
@@ -65,8 +68,10 @@ public class UserController {
 		userRepo.delete(updatedUser);
 		return "Utilisateur supprimé";
 	}
-	
-	
+	@PostMapping(path = "/authenticate", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public User authenticate (@RequestBody User userToAuthenticate) {
+		return userService.authenticate(userToAuthenticate).get();
+	}
 	
 	
 	
