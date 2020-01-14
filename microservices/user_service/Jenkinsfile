@@ -1,0 +1,17 @@
+pipeline {
+    agent any
+    stages {
+        stage('Build Application') {
+            steps{
+                build job: 'UserService_Build'
+            }
+        }
+        stage('Package Application'){
+            steps{
+                build job: 'UserService_Package'
+
+            }
+            
+        }
+    }
+}
